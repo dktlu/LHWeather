@@ -7,8 +7,6 @@ public interface BaseViewInterface {
 
     public void initView();
 
-    public void bindView();
-
     public void initData();
 
 }

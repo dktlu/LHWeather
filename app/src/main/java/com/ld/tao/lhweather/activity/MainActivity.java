@@ -1,34 +1,30 @@
 package com.ld.tao.lhweather.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ld.tao.lhweather.R;
 import com.ld.tao.lhweather.base.BaseActivity;
-import com.ld.tao.lhweather.dialog.ConfirmDialog;
+import com.ld.tao.lhweather.util.TDevice;
+import com.ld.tao.lhweather.widget.EmptyLayout;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
+    @Bind(R.id.layout_error)
+    EmptyLayout layoutError;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-        bindView();
-        initData();
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
-    public void initView() {
-
-    }
-
-    public void bindView() {
-    }
-
-    public void initData() {
+    @OnClick(R.id.layout_error)
+    public void ssh() {
+        Toast.makeText(this, TDevice.getNetworkType() + "", Toast.LENGTH_SHORT).show();
     }
 
 }
