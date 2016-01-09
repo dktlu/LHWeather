@@ -11,6 +11,8 @@ import com.ld.tao.lhweather.widget.EmptyLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.finalteam.okhttpfinal.HttpRequest;
+import cn.finalteam.okhttpfinal.RequestParams;
 
 public class MainActivity extends BaseActivity {
 
@@ -20,6 +22,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RequestParams params = new RequestParams(this);
     }
 
     @OnClick(R.id.layout_error)
