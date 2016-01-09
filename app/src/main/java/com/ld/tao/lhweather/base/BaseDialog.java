@@ -24,7 +24,7 @@ public abstract class BaseDialog extends Dialog {
     private boolean alignBottom = false;    //是否位于底部
     private int margin = 15;                   //设置与边缘的间距
     private boolean isCorner = true;            //是否设置圆角边框
-    private int mDialogColor = Color.WHITE;     //dialog的北京颜色
+    private int mDialogColor = Color.WHITE;     //dialog的背景颜色
 
     public BaseDialog(Context context) {
         this(context, false);

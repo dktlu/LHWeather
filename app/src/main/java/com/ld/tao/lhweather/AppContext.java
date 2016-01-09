@@ -25,6 +25,7 @@ public class AppContext extends BaseApplication {
     private void init() {
         Map<String, String> commonParamMap = new HashMap<>();
         Map<String, String> commonHeaderMap  = new HashMap<>();
+        commonHeaderMap.put("apikey", "9ddab0a07f9e0a30c8db0478182e953e");
 
         OkHttpFinal okHttpFinal = new OkHttpFinal.Builder()
                 .setCommenParams(commonParamMap)

@@ -5,7 +5,7 @@ package com.ld.tao.lhweather.http;
  */
 public class Api {
 
-    public static String BASE_API_URL = "";
+    public static String BASE_API_URL = "http://apis.baidu.com/apistore/qunaerticket/querydetail";
 
     public static final String REQUEST_URL = BASE_API_URL + "";
 }

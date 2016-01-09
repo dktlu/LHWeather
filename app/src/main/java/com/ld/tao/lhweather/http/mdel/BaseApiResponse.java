@@ -4,31 +4,31 @@ package com.ld.tao.lhweather.http.mdel;
  * Created by tao on 2016/1/9.
  */
 public class BaseApiResponse<T> {
-    private int code;
-    private String msg;
-    private T data;
+    private int errNum;
+    private String errMsg;
+    private T retData;
 
-    public int getCode() {
-        return code;
+    public int getErrNum() {
+        return errNum;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setErrNum(int errNum) {
+        this.errNum = errNum;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
-    public T getData() {
-        return data;
+    public T getRetData() {
+        return retData;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setRetData(T retData) {
+        this.retData = retData;
     }
 }

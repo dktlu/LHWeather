@@ -11,8 +11,8 @@ public class MyBaseHttpRequestCallback<T extends BaseApiResponse> extends BaseHt
 
     @Override
     protected void onSuccess(T t) {
-        int code = t.getCode();
-        if (code == 1) {
+        int code = t.getErrNum();
+        if (code == 0) {
             onLoginSuccess(t);
         } else {
             onLoginFailure(t);
