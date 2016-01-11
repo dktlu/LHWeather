@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.ld.tao.lhweather.R;
 import com.ld.tao.lhweather.base.BaseActivity;
 import com.ld.tao.lhweather.http.Api;
@@ -14,16 +13,15 @@ import com.ld.tao.lhweather.util.TDevice;
 import com.ld.tao.lhweather.widget.EmptyLayout;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.finalteam.okhttpfinal.HttpRequest;
-import cn.finalteam.okhttpfinal.JsonHttpRequestCallback;
 import cn.finalteam.okhttpfinal.RequestParams;
 
 public class MainActivity extends BaseActivity {
 
     @Bind(R.id.layout_error)
     EmptyLayout layoutError;
+    private String[] arrays = {"相册", "相机"};
 
     @Override
     protected int getLayoutId() {
@@ -43,7 +41,7 @@ public class MainActivity extends BaseActivity {
         HttpRequest.get(Api.BASE_API_URL, params, new MyBaseHttpRequestCallback<TicketDetailResponse>() {
             @Override
             public void onLoginSuccess(TicketDetailResponse ticketDetailResponse) {
-                Log.e("this", "msg = " + ticketDetailResponse.getErrMsg() + "/---- " + ticketDetailResponse.getRetData().getTicketDetail().getLastmod());
+                showWaitDialog();
             }
 
             @Override
@@ -53,5 +51,4 @@ public class MainActivity extends BaseActivity {
         });
         Toast.makeText(this, TDevice.getNetworkType() + "", Toast.LENGTH_SHORT).show();
     }
-
 }
