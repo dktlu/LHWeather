@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ld.tao.lhweather.AppContext;
 import com.ld.tao.lhweather.http.MyHttpCycleContext;
+import com.ld.tao.lhweather.interf.BaseViewInterface;
 import com.ld.tao.lhweather.interf.DialogControl;
 
 import butterknife.ButterKnife;
@@ -20,10 +21,17 @@ import cn.finalteam.okhttpfinal.HttpTaskHandler;
  * fragment基类
  * Created by tao on 2016/1/8.
  */
-public class BaseFragment extends Fragment implements MyHttpCycleContext {
+public class BaseFragment extends Fragment implements MyHttpCycleContext, BaseViewInterface {
 
     protected final String HTTP_TASK_KEY = "HttpTaskKey_" + hashCode();
     protected LayoutInflater mInflater;
+
+    public static final int STATE_NONE = 0;
+    public static final int STATE_REFRESH = 1;
+    public static final int STATE_LOADMORE = 2;
+    public static final int STATE_NOMORE = 3;
+    public static final int STATE_PRESSNONE = 4;// 正在下拉但还没有到刷新的状态
+    public static int mState = STATE_NONE;
 
     @Override
     public String getHttpTaskKey() {
@@ -90,5 +98,15 @@ public class BaseFragment extends Fragment implements MyHttpCycleContext {
     public void onDestroy() {
         super.onDestroy();
         HttpTaskHandler.getInstance().removeTask(HTTP_TASK_KEY);
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 }
