@@ -22,6 +22,39 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Vie
     private ArrayList<View> mFooterViews = new ArrayList<>();
     private RecyclerView.Adapter adapter;
 
+    private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            super.onItemRangeChanged(positionStart, itemCount);
+            notifyItemRangeChanged(positionStart + getHeaderViewsCount(), itemCount);
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            notifyItemRangeInserted(positionStart + getHeaderViewsCount(), itemCount);
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            super.onItemRangeRemoved(positionStart, itemCount);
+            notifyItemRangeRemoved(positionStart + getHeaderViewsCount(), itemCount);
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            super.onItemRangeMoved(fromPosition, toPosition, itemCount);
+            int headerViewsCountCount = getHeaderViewsCount();
+            notifyItemRangeChanged(fromPosition + headerViewsCountCount, toPosition + headerViewsCountCount + itemCount);
+        }
+    };
+
     public HeaderAndFooterRecyclerViewAdapter() {
 
     }
@@ -60,6 +93,24 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Vie
         return getHeaderViewsCount() + getFooterViewsCount() + mInnerAdapter.getItemCount();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        int innerCount = mInnerAdapter.getItemCount();
+        int headerViewsCount = getHeaderViewsCount();
+        if (position < headerViewsCount) {
+            return TYPE_HEADER_VIEW + position;
+        } else if (headerViewsCount <= position && position < headerViewsCount + innerCount) {
+
+            int innerItemViewType = mInnerAdapter.getItemViewType(position - headerViewsCount);
+            if(innerItemViewType >= Integer.MAX_VALUE / 2) {
+                throw new IllegalArgumentException("your adapter's return value of getViewTypeCount() must < Integer.MAX_VALUE / 2");
+            }
+            return innerItemViewType + Integer.MAX_VALUE / 2;
+        } else {
+            return TYPE_FOOTER_VIEW + position - headerViewsCount - innerCount;
+        }
+    }
+
     /**
      * 设置adapter
      *
@@ -71,8 +122,13 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Vie
                 throw new RuntimeException("your adapter must be a RecyclerView.Adapter");
             }
         }
+        if (mInnerAdapter != null) {
+            notifyItemRangeRemoved(getHeaderViewsCount(), mInnerAdapter.getItemCount());
+            mInnerAdapter.unregisterAdapterDataObserver(mDataObserver);
+        }
 
         this.mInnerAdapter = adapter;
+        mInnerAdapter.registerAdapterDataObserver(mDataObserver);
         notifyItemRangeInserted(getHeaderViewsCount(), mInnerAdapter.getItemCount());
     }
 

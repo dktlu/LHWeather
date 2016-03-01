@@ -24,7 +24,7 @@ public class RecyclerViewStateUtils {
      */
     public static void setFooterViewState(Activity instance, RecyclerView recyclerView, int pageSize, LoadingFooter.State state, View.OnClickListener errorListener) {
 
-        if(instance==null || instance.isFinishing()) {
+        if (instance == null || instance.isFinishing()) {
             return;
         }
 
@@ -62,6 +62,40 @@ public class RecyclerViewStateUtils {
 
             headerAndFooterAdapter.addFooterView(footerView);
             recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
+        }
+    }
+
+    /**
+     * 获取当前RecyclerView.FooterView的状态
+     *
+     * @param recyclerView
+     */
+    public static LoadingFooter.State getFooterViewState(RecyclerView recyclerView) {
+
+        RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
+        if (outerAdapter != null && outerAdapter instanceof HeaderAndFooterRecyclerViewAdapter) {
+            if (((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterViewsCount() > 0) {
+                LoadingFooter footerView = (LoadingFooter) ((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterView();
+                return footerView.getState();
+            }
+        }
+
+        return LoadingFooter.State.Normal;
+    }
+
+    /**
+     * 设置当前RecyclerView.FooterView的状态
+     *
+     * @param recyclerView
+     * @param state
+     */
+    public static void setFooterViewState(RecyclerView recyclerView, LoadingFooter.State state) {
+        RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
+        if (outerAdapter != null && outerAdapter instanceof HeaderAndFooterRecyclerViewAdapter) {
+            if (((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterViewsCount() > 0) {
+                LoadingFooter footerView = (LoadingFooter) ((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterView();
+                footerView.setState(state);
+            }
         }
     }
 }

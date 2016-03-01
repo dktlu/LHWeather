@@ -1,9 +1,11 @@
 package com.ld.tao.lhweather.http.mdel;
 
+import java.io.Serializable;
+
 /**
  * Created by tao on 2016/1/9.
  */
-public class BaseApiResponse<T> {
+public class BaseApiResponse<T> implements Serializable {
     private int errNum;
     private String errMsg;
     private T retData;

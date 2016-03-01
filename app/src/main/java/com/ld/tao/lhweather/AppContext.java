@@ -1,6 +1,9 @@
 package com.ld.tao.lhweather;
 
+import android.content.SharedPreferences;
+
 import com.ld.tao.lhweather.base.BaseApplication;
+import com.ld.tao.lhweather.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +17,7 @@ import cn.finalteam.okhttpfinal.OkHttpFinal;
 public class AppContext extends BaseApplication {
 
     private static AppContext instance;
+    private static String LAST_REFRESH_TIME = "last_refresh_time.pref";
 
     @Override
     public void onCreate() {
@@ -40,5 +44,26 @@ public class AppContext extends BaseApplication {
 
     public static AppContext getInstance() {
         return instance;
+    }
+
+    /**
+     * 记录列表上次的刷新时间
+     * @param key
+     * @param value
+     */
+    public static void putToLastRefreshTime(String key, String value) {
+        SharedPreferences preferences = getPreferences(LAST_REFRESH_TIME);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    /**
+     * 获取列表的上次刷新时间
+     * @param key
+     * @return
+     */
+    public static String getLaseRefreshTime(String key) {
+        return getPreferences(LAST_REFRESH_TIME).getString(key, StringUtils.getCurTimeStr());
     }
 }

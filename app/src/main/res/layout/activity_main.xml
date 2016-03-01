@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/match_match"
+    android:orientation="vertical">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        style="@style/match_match">
+
+    </android.support.v7.widget.RecyclerView>
 
     <com.ld.tao.lhweather.widget.EmptyLayout
         android:id="@+id/layout_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"/>
+        style="@style/match_match"
+        android:visibility="gone"/>
 
 
-</RelativeLayout>
+</LinearLayout>
